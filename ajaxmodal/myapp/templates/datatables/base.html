@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax Modal</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+
+    <p><h3>Python Django How to DataTables with Insert Data Jquery Ajax</h3></p>
+    <hr style="border-top: 1px dotted #ccc;" />
+
+{% block body %}
+
+{% endblock %}
+
+     </div>
+</div>
+
+</body>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        let table = new DataTable('#myTable');
+
+        $('#submit').on('click', function (){
+            $firstname = $('#firstname').val();
+            $lastname = $('#lastname').val();
+            $address = $('#address').val();
+
+            if($firstname == '' || $lastname == '' || $address == ''){
+                alert('Please complete field')
+            }else{
+                $.ajax({
+                    type:'POST',
+                    url: {% url 'insert' %},
+                    data: {
+                        firstname: $firstname,
+                        lastname: $lastname,
+                        address: $address,
+                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                    },
+                    success: function(){
+                        alert('Save Data');
+                        $('#firstname').val('');
+                        $('#lastname').val('');
+                        $('#address').val('');
+                        window.location = '/';
+                    }
+                })
+            }
+        })
+    </script>
+</html>
